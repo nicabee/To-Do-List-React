@@ -2,27 +2,6 @@
 
 A simple to do list created using ReactJS
 
-## Installation
-
-To install the modules that are used:
-
-```
-npm install
-```
-
-Run the following code in the console:
-
-```
-npx sequelize-cli db:migrate
-```
-
-Default DB name set in `connection.js` and `.env` is `xpnstrackr`
-
-Run the app!
-
-```
-nodemon app.js
-```
 
 ## Functionalities
 
