@@ -60,7 +60,7 @@ class App extends Component {
           <img src={cat} width="100" height="100" />
         </h1>
         <center>
-          <SampleItem></SampleItem>
+          <SampleItem name="Monica"></SampleItem>
           {/* <img src={strawberry} /> */}
         </center>
         <div className="container">
