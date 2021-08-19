@@ -13,15 +13,17 @@ const App = () => {
     const { value } = event.target;
     setToDo(value);
   };
+
   const submit = () => {
-    const list = toDoList;
+    //const list = toDoList;
     const newItem = {
       id: 1 + Math.random(),
       value: toDo,
     };
     if (newItem.value && !toDoList.includes(newItem.value)) {
-      list.push(newItem);
-      setToDoList([...list]);
+      toDoList.push(newItem);
+      setToDoList([...toDoList]);
+      setToDo("");
     }
   };
 
@@ -54,6 +56,7 @@ const App = () => {
           <input
             type="text"
             placeholder="Type item here..."
+            value={toDo}
             onChange={handleToDo}
           />
           <button className="add-btn btn-floating" onClick={submit}>
