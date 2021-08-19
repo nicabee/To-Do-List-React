@@ -1,113 +1,83 @@
-import React, { Component } from "react";
+//import React, { Component } from "react";
 import "./App.css";
 import SampleItem from "./components/SampleItem";
 import cat from "./images/cat.gif";
+import React, { useEffect, useState } from "react";
 // import strawberry from "./images/strawberry.png";
 
-class App extends Component {
-  constructor(props) {
-    super(props);
+const App = () => {
+  const [toDoList, setToDoList] = useState([]);
+  const [toDo, setToDo] = useState("");
 
-    this.state = {
-      newItem: "",
-      list: [],
-    };
-  }
-
-  updateInput(key, value) {
-    /** update react state */
-    this.setState({
-      [key]: value,
-    });
-  }
-
-  addItem() {
-    /** create item with a unique id */
+  const handleToDo = (event) => {
+    const { value } = event.target;
+    setToDo(value);
+  };
+  const submit = () => {
+    const list = toDoList;
     const newItem = {
       id: 1 + Math.random(),
-      value: this.state.newItem.slice(),
+      value: toDo,
     };
+    if (newItem.value && !toDoList.includes(newItem.value)) {
+      list.push(newItem);
+      setToDoList([...list]);
+    }
+  };
 
-    /** copy of current list of items */
-    const list = [...this.state.list];
+  const deleteItem = (id) => {
+    setToDoList((list) => list.filter((item) => item.id !== id));
+  };
 
-    /** add new item to list */
-    list.push(newItem);
-
-    /** update state with new list and reset newItem input */
-    this.setState({
-      list,
-      newItem: "",
-    });
-  }
-
-  deleteItem(id) {
-    /** copy current list of items */
-    const list = [...this.state.list];
-
-    /** filter out item being deleted */
-    const updatedList = list.filter((item) => item.id !== id);
-
-    this.setState({ list: updatedList });
-  }
-
-  render() {
-    return (
-      <div>
-        <h1 className="app-title">
-          <img src={cat} width="100" height="100" />
-          To Do List
-          <img src={cat} width="100" height="100" />
-        </h1>
-        <center>
-          <SampleItem name="Monica"></SampleItem>
-          {/* <img src={strawberry} /> */}
-        </center>
-        <div className="container">
-          <div
-            style={{
-              padding: 100,
-              textAlign: "center",
-              maxWidth: 500,
-              margin: "auto",
-            }}
-          >
-            Add an Item
-            <br />
-            <input
-              type="text"
-              placeholder="Type item here..."
-              value={this.state.newItem}
-              onChange={(e) => this.updateInput("newItem", e.target.value)}
-            />
-            <button
-              className="add-btn btn-floating"
-              onClick={() => this.addItem()}
-              disabled={!this.state.newItem.length}
-            >
-              <i class="material-icons"> + </i>
-            </button>
-            <br />
-            <ul>
-              {this.state.list.map((item) => {
-                return (
-                  <li key={item.id}>
-                    {item.value}
-                    <button
-                      className="btn brn-floating"
-                      onClick={() => this.deleteItem(item.id)}
-                    >
-                      <i class="material-icons">x</i>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+  return (
+    <div>
+      <h1 className="app-title">
+        <img src={cat} width="100" height="100" alt="cat" />
+        To Do List
+        <img src={cat} width="100" height="100" alt="cat2" />
+      </h1>
+      <center>
+        <SampleItem name="Monica"></SampleItem>
+        {/* <img src={strawberry} /> */}
+      </center>
+      <div className="container">
+        <div
+          style={{
+            padding: 100,
+            textAlign: "center",
+            maxWidth: 500,
+            margin: "auto",
+          }}
+        >
+          Add an Item
+          <br />
+          <input
+            type="text"
+            placeholder="Type item here..."
+            onChange={handleToDo}
+          />
+          <button className="add-btn btn-floating" onClick={submit}>
+            <i class="material-icons"> + </i>
+          </button>
+          <br />
+          <ul>
+            {toDoList.map((item, index) => {
+              return (
+                <li key={index}>
+                  {item.value}
+                  <button onClick={() => deleteItem(item.id)}>
+                    <i class="material-icons">x</i>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+  //}
+};
 
+//default export
 export default App;
